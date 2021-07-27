@@ -1,0 +1,35 @@
+---
+
+- hosts: all
+  become: true
+  tasks:
+  
+  - name: update repo
+    apt: 
+     update_cache: yes
+    when: ansible_distribution_version == "Ubuntu"
+ 
+  - name: update repo
+    yum:
+     update_cache: yes
+    when: ansible_distribution_version == "CentOS"
+
+ 
+- hosts: web
+  become: true
+  tasks:
+
+  - name: apache2
+    apt:
+     name: apache2
+     state: latest
+    when: ansible_distribution == "Ubuntu"
+
+
+  - name: httpd and php
+    yum:
+     name: 
+       - httpd
+       - php
+     state: latest
+    when: ansible_distribution == "CentOS"
