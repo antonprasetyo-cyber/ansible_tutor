@@ -1,0 +1,26 @@
+---
+
+- hosts: all
+  become: true
+  tasks:
+  
+  - name: update repo
+    apt: 
+     update_cache: yes
+    when: ansible_distribution == "Ubuntu"
+ 
+  - name: update repo
+    yum:
+     update_cache: yes
+    when: ansible_distribution == "CentOS"
+
+ 
+- hosts: web
+  become: true
+  tasks:
+
+  - name: install samba
+    package:
+      name: samba
+      state: latest
+
